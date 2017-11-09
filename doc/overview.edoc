@@ -1,0 +1,43 @@
+@author "Manuel Rubio" <manuel@altenwald.com>
+@copyright 2017 Altenwald Solutions, S.L.
+@title ePHP XML
+
+<strong>IMPORTANT</strong> This development is still under heavy construction. This depends on OOP that's too new in ephp so, if you want to help us check the <a href='https://github.com/bragful/ephp'>ephp</a> repository, add code, send pull-requests, open issues for requests, suggestions or ideas. Thanks!
+
+@doc
+<a href="https://travis-ci.org/bragful/ephp_xml"><img src="https://img.shields.io/travis/bragful/ephp_xml/master.svg" alt="Build Status"/></a>
+<a href='https://codecov.io/gh/bragful/ephp_xml'><img src='https://img.shields.io/codecov/c/github/bragful/ephp_xml.svg' alt='Codecov' /></a>
+<a href='https://raw.githubusercontent.com/bragful/ephp_xml/master/COPYING'><img src='https://img.shields.io/github/license/bragful/ephp_xml.svg' alt='License: LGPL 2.1'/></a>
+
+This library implements the XML functions as is in PHP code for <a href='https://github.com/bragful/ephp'>ephp</a> keeping in mind to have it as pure 100% Erlang.
+
+== Requirements ==
+
+ePHP XML requires to be run over an Erlang/OTP 17+, but not all the versions are full compatible or recommended. See the list:
+
+| Erlang Version | Support | Notes |
+|:---|:---:|:---|
+| 20.1 | :heavy_check_mark: | Recommended if you use OTP 20 |
+| 20.0 | :heavy_check_mark: | |
+| 19.3 | :heavy_check_mark: | Recommended if you use OTP 19 |
+| 19.2 | :heavy_check_mark: | |
+| 19.1 | :heavy_check_mark: | |
+| 19.0 | :heavy_check_mark: | |
+| 18.3 | :heavy_check_mark: | Recommended if you use OTP 18 |
+| 18.2.1 | :heavy_check_mark: | |
+| 18.2 | :heavy_check_mark: | |
+| 18.1 | :heavy_check_mark: | |
+| 18.0 | :heavy_check_mark: | |
+| 17.5 | :heavy_check_mark: | Recommended if you use OTP 17 |
+| 17.4 | :heavy_check_mark: | |
+| 17.3 | :x: | fail in SSL |
+| 17.1 | :heavy_check_mark: | |
+| 17.0 | :heavy_check_mark: | |
+
+== Getting Started ==
+
+A simple way to use, is include in your project <code>rebar.config</code> the following dependency line:
+
+<pre lang="erlang">    {ephp_xml, ".*", {git, "git://github.com/bragful/ephp_xml.git", master}}</pre>
+
+Enjoy!

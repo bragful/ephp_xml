@@ -1,0 +1,22 @@
+{"1.1.0",
+[{<<"ephp">>,
+  {git,"https://github.com/bragful/ephp.git",
+       {ref,"dc383f3895d300302857f7a08e3c9f6394e59eee"}},
+  0},
+ {<<"ezic">>,
+  {git,"https://github.com/waj/ezic.git",
+       {ref,"f27b57e00a9d4aeb75ee7147390a2b2f8812697b"}},
+  1},
+ {<<"recon">>,{pkg,<<"recon">>,<<"2.3.2">>},1},
+ {<<"unistring">>,
+  {git,"https://github.com/altenwald/unistring.git",
+       {ref,"9edbf2afc049d1a7b47d2ec054de04b9bcf5d095"}},
+  1},
+ {<<"zucchini">>,
+  {git,"https://github.com/altenwald/zucchini.git",
+       {ref,"e73578f1e1a960c9af1cc3be6bb84bdf59680358"}},
+  1}]}.
+[
+{pkg_hash,[
+ {<<"recon">>, <<"4444C879BE323B1B133EEC5241CB84BD3821EA194C740D75617E106BE4744318">>}]}
+].
