@@ -1,10 +1,14 @@
 
 
-# ePHP XML<strong>IMPORTANT</strong> This development is still under heavy construction. This depends on OOP that's too new in ephp so, if you want to help us check the <a href='https://github.com/bragful/ephp'>ephp</a> repository, add code, send pull-requests, open issues for requests, suggestions or ideas. Thanks! #
+# ePHP XML #
 
 Copyright (c) 2017 Altenwald Solutions, S.L.
 
 __Authors:__ "Manuel Rubio" ([`manuel@altenwald.com`](mailto:manuel@altenwald.com)).
+
+
+<strong>IMPORTANT</strong>
+ This development is still under heavy construction. This depends on OOP that's too new in ephp so, if you want to help us check the [ephp](https://github.com/bragful/ephp) repository, add code, send pull-requests, open issues for requests, suggestions or ideas. Thanks!
 
 [![Build Status](https://img.shields.io/travis/bragful/ephp_xml/master.svg)](https://travis-ci.org/bragful/ephp_xml)
 [![Codecov](https://img.shields.io/codecov/c/github/bragful/ephp_xml.svg)](https://codecov.io/gh/bragful/ephp_xml)
