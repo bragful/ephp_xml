@@ -11,7 +11,10 @@
 
     get_classes/0,
 
-    sxmlel_construct/4
+    sxmlel_construct/4,
+    sxmlel_get/4,
+
+    simplexml_load_string/3
 ]).
 
 -import(ephp_class, [class_attr/2, class_attr/3]).
@@ -21,10 +24,14 @@
 -spec init_func() -> ephp_func:php_function_results().
 
 init_func() -> [
-    {json_encode, [pack_args, {args, [mixed, {integer, 0}, {integer, 512}]}]}
-    % {json_decode, [
-    %     pack_args,
-    %     {args, [string, {boolean, false}, {integer, 512}, {integer, 0}]}]}
+    {simplexml_load_string, [
+        pack_args,
+        {args, [string,
+                {string, <<"SimpleXMLElement">>},
+                {integer, 0},
+                {string, <<>>},
+                {boolean, false}]}
+    ]}
 ].
 
 -spec init_config() -> ephp_func:php_config_results().
@@ -142,11 +149,60 @@ get_classes() ->
                     #variable{name = <<"path">>}
                 ],
                 builtin = {?MODULE, sxmlel_xpath}
+            },
+            Method#class_method{
+                name = <<"__get">>,
+                args = [
+                    #variable{name = <<"name">>}
+                ],
+                builtin = {?MODULE, sxmlel_get}
             }
         ]
     }].
 
+simplexml_load_string(Context, Line, [Data, {_, ClassName}, Options,
+                                      NS, IsPrefix]) ->
+    Object = ephp_class:instance(undefined, Context, Context, ClassName, Line),
+    IsURL = {undefined, false},
+    sxmlel_construct(Context, Object, Line,
+                     [Data, Options, IsURL, NS, IsPrefix]).
 
-sxmlel_construct(_Context, _Line, _ObjectId,
-                 [{_, _Data}, _Options, {_, false}, _NS, _IsPrefix]) ->
-    ok.
+instance(Context, Line, ClassName, Data) ->
+    ObjectId = ephp_class:instance(undefined, Context, Context, ClassName, Line),
+    xml_to_object(Context, Line, ClassName, ObjectId, Data).
+
+xml_to_object(Context, Line, ClassName, ObjectId, {_Tag, Attrs, Children}) ->
+    ObjCtx = ephp_object:get_context(ObjectId),
+    Class0 = ephp_object:get_class(ObjectId),
+    Class1 = ephp_class:add_if_no_exists_attrib(Class0, <<"@attributes">>),
+    Class2 = ephp_class:add_if_no_exists_attrib(Class1, <<"@cdata">>),
+    AttrsArray = lists:foldl(fun({Name, Value}, Array) ->
+        ephp_array:store(Name, Value, Array)
+    end, ephp_array:new(), Attrs),
+    ephp_context:set(ObjCtx, #variable{name = <<"@attributes">>}, AttrsArray),
+    Tags = lists:usort([ Tag || {Tag, _, _} <- Children ]),
+    Class3 = lists:foldl(fun(Tag, Class) ->
+        ephp_context:set(ObjCtx, #variable{name = Tag}, ephp_array:new()),
+        ephp_class:add_if_no_exists_attrib(Class, Tag)
+    end, Class2, Tags),
+    CData = lists:foldl(fun
+        ({Tag, A, Content}, CData) ->
+            Object = instance(Context, Line, ClassName, {Tag, A, Content}),
+            ephp_context:set(ObjCtx, #variable{name = Tag, idx = [auto]}, Object),
+            CData;
+        (Binary, CData) when is_binary(Binary) ->
+            ephp_array:store(auto, Binary, CData)
+    end, ephp_array:new(), Children),
+    ephp_context:set(ObjCtx, #variable{name = <<"@cdata">>}, CData),
+    ephp_object:set_class(ObjectId, Class3),
+    ObjectId.
+
+sxmlel_construct(Context, ObjectId, Line,
+                 [{_, Data}, _Options, {_, false}, _NS, _IsPrefix]) ->
+    {Tag, Attrs, Children} = exomler:decode(Data),
+    xml_to_object(Context, Line, <<"SimpleXMLElement">>, ObjectId,
+                  {Tag, Attrs, Children}).
+
+sxmlel_get(_Context, _Line, _ObjectId, [{_, _Name}]) ->
+    io:format("name => ~p~n", [_Name]),
+    ephp_array:new().

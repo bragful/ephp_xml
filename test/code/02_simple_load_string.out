@@ -1,0 +1,29 @@
+object(SimpleXMLElement)#1 (1) {
+  ["film"]=>
+  array(3) {
+    [0]=>
+    object(SimpleXMLElement)#2 (1) {
+      ["@attributes"]=>
+      array(1) {
+        ["title"]=>
+        string(18) "Back to the Future"
+      }
+    }
+    [1]=>
+    object(SimpleXMLElement)#3 (1) {
+      ["@attributes"]=>
+      array(1) {
+        ["title"]=>
+        string(24) "Raiders for the Lost Arc"
+      }
+    }
+    [2]=>
+    object(SimpleXMLElement)#4 (1) {
+      ["@attributes"]=>
+      array(1) {
+        ["title"]=>
+        string(23) "Ferris Buller's Day Off"
+      }
+    }
+  }
+}
